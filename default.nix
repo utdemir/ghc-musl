@@ -8,6 +8,10 @@ in
 
 let
 
+user = "utdemir";
+name = "ghc-musl";
+tag = "${compiler}-v1";
+
 fixLocale = pkg: pkgsMusl.lib.overrideDerivation pkg (_: {
   LANG="C.UTF-8";
 });
@@ -59,14 +63,13 @@ packages = with pkgsMusl; [
 ];
 
 layered = pkgsOrig.dockerTools.buildLayeredImage {
-  name = "static-ghc-granular";
-  tag = "latest";
+  name = "${name}-layers";
+  inherit tag;
   contents = packages ++ libraries;
 };
 
-result = pkgsOrig.dockerTools.buildImage {
-  name = "static-ghc";
-  tag = "latest";
+image = pkgsOrig.dockerTools.buildImage {
+  inherit name tag;
   fromImage = layered;
   runAsRoot = ''
     #!${pkgsMusl.stdenv.shell}
@@ -89,4 +92,12 @@ result = pkgsOrig.dockerTools.buildImage {
 
 in
 
-result
+{
+  image=image;
+  upload = pkgsOrig.writeScript "upload-${name}-${tag}" ''
+    ${pkgsOrig.skopeo}/bin/skopeo copy -f v2s2 \
+      tarball:${image} \
+      docker://${user}/${name}:${tag}
+  '';
+}
+
