@@ -10,7 +10,7 @@ let
 
 user = "utdemir";
 name = "ghc-musl";
-tag = "${compiler}-v1";
+tag = "v1-${compiler}";
 
 fixLocale = pkg: pkgsMusl.lib.overrideDerivation pkg (_: {
   LANG="C.UTF-8";
@@ -95,9 +95,16 @@ in
 {
   image=image;
   upload = pkgsOrig.writeScript "upload-${name}-${tag}" ''
-    ${pkgsOrig.skopeo}/bin/skopeo copy -f v2s2 \
-      tarball:${image} \
-      docker://${user}/${name}:${tag}
+    set -x
+    # Ideally we would use skopeo, however somehow it doesn't
+    # copy over the metadata like ENV or CMD.
+    # ${pkgsOrig.skopeo}/bin/skopeo copy -f v2s2 \
+    #   tarball:${image} \
+    #   docker://${user}/${name}:${tag}
+
+    cat ${image} | docker load
+    docker tag "${name}:${tag}" "${user}/${name}:${tag}"
+    docker push "${user}/${name}:${tag}"
   '';
 }
 
