@@ -10,7 +10,7 @@ Add `ghc-options: -static -optl-static -optl-pthread -fPIC` flags to your cabal 
 
 ### cabal-install
 
-Mount the project directory to the container, and use `cabal-install` commands as usual:
+Mount the project directory to the container, and use `cabal-install` inside the container:
 
 ```
 $ cd myproject/
@@ -22,7 +22,7 @@ sh$ cabal new-build
 
 ### stack
 
-Add these to your `stack.yaml`, and use `stack` as usual:
+Add these lines to your `stack.yaml`, and use `stack` as usual on the host machine:
 
 ```
 docker:
