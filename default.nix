@@ -56,6 +56,7 @@ packages = with pkgsMusl; [
   bash coreutils gnused gnugrep gawk
   binutils binutils-unwrapped
   gcc pkgconfig automake autoconf
+  shadow
 ] ++ [
   haskellPackages.ghc
   (haskell.lib.justStaticExecutables haskellPackages.stack)
