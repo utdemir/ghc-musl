@@ -2,12 +2,12 @@
 
 This repository provides Docker images with GHC compiled with `musl`;
 therefore can be used to create fully static Haskell binaries without
-`glibc` dependency on any platform which can run Docker.
+`glibc` dependency on any platform which can run Docker (x86_64).
 
 Images come with `ghc` and `cabal` executables alongside with commonly
 used libraries and build tools.
 
-Here is the latest images currently published in Docker Hub:
+Here are the latest images currently published in Docker Hub:
 
 * `utdemir/ghc-musl:v3-ghc844`
 * `utdemir/ghc-musl:v3-ghc865`
