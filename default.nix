@@ -72,6 +72,7 @@ in
 {
   image=image;
   upload = pkgsOrig.writeScript "upload-${name}-${tag}" ''
+    #!/usr/bin/env bash
     set -x
     # Ideally we would use skopeo, however somehow it doesn't
     # copy over the metadata like ENV or CMD.
