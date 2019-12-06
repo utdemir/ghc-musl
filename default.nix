@@ -12,36 +12,12 @@ user = "utdemir";
 name = "ghc-musl";
 tag = "v1-${compiler}";
 
-fixLocale = pkg: pkgsMusl.lib.overrideDerivation pkg (_: {
-  LANG="C.UTF-8";
-});
-
 pkgsMusl = pkgsOrig.pkgsMusl;
 haskell = pkgsMusl.haskell;
 lib = pkgsMusl.stdenv.lib;
 
 haskellPackages = haskell.packages.${compiler}.override {
   overrides = se: su: {
-    # Tests don't compile with musl:
-    #   hGetContents: invalid argument (invalid byte sequence)
-    #   commitBuffer: invalid argument (invalid character)
-    "blaze-builder" = fixLocale su.blaze-builder;
-    "code-page" = fixLocale su.code-page;
-    "conduit" = fixLocale su.conduit;
-    "foundation" = fixLocale su.foundation;
-    "hedgehog" = fixLocale su.hedgehog;
-    "memory" = fixLocale su.memory;
-    "retry" = fixLocale su.retry;
-    "shelly" = fixLocale su.shelly;
-    "tasty-hedgehog" = fixLocale su.tasty-hedgehog;
-    "yaml" = fixLocale su.yaml;
-
-    # Haddock does not work with musl:
-    #   haddock: internal error: <stdout>: \
-    #     commitBuffer: invalid argument (invalid character)
-    #     hGetContents: invalid argument (invalid byte sequence)
-    "basement" = fixLocale su.basement;
-    "path-io" = fixLocale su.path-io;
   };
 };
 
@@ -59,7 +35,6 @@ packages = with pkgsMusl; [
   shadow
 ] ++ [
   haskellPackages.ghc
-  (haskell.lib.justStaticExecutables haskellPackages.stack)
   (haskell.lib.justStaticExecutables haskellPackages.cabal-install)
 ];
 
