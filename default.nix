@@ -76,6 +76,7 @@ image = pkgsOrig.dockerTools.buildImage {
     #!${pkgsMusl.stdenv.shell}
     ${pkgsMusl.dockerTools.shadowSetup}
     mkdir /tmp
+    chmod a=rwx,o+t /tmp
   '';
   diskSize = 8192;
   config = {
