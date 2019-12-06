@@ -4,8 +4,8 @@ This repository provides Docker images with GHC compiled with `musl`;
 therefore can be used to create fully static Haskell binaries without
 `glibc` dependency on any platform which can run Docker.
 
-Images contain `ghc`, `cabal` and `stack` executables alongside with
-commonly used libraries and build tools.
+Images come with `ghc` and `cabal` executables alongside with commonly
+used libraries and build tools.
 
 ## Usage
 
@@ -34,7 +34,6 @@ host machine:
 docker:
   enable: true
   image: ghc-musl:v1-ghc865
-  set-user: false
 ```
 
 ## Development
@@ -45,3 +44,16 @@ machine with KVM support.
 Musl-compiled GHC and libraries are not in official NixOS cache, so
 prepare to build a lot. To speed it up, you can use the cache I maintain
 at [utdemir.cachix.org]().
+
+Feel free to open an issue or send a PR to add a library or support a
+newer compiler version.
+
+## TODO
+
+* Support using `integer-simple` instead of `libgmp`.
+
+## Related
+
+* https://github.com/nh2/static-haskell-nix
+* https://github.com/fpco/docker-static-haskell
+
