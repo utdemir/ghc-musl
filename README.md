@@ -7,6 +7,12 @@ therefore can be used to create fully static Haskell binaries without
 Images come with `ghc` and `cabal` executables alongside with commonly
 used libraries and build tools.
 
+Here is the latest images currently published in Docker Hub:
+
+* `utdemir/ghc-musl:v2-ghc844`
+* `utdemir/ghc-musl:v2-ghc865`
+* `utdemir/ghc-musl:v2-ghc881`
+
 ## Usage
 
 Add `ghc-options: -static -optl-static -optl-pthread -fPIC` flags to
