@@ -9,9 +9,9 @@ used libraries and build tools.
 
 Here is the latest images currently published in Docker Hub:
 
-* `utdemir/ghc-musl:v2-ghc844`
-* `utdemir/ghc-musl:v2-ghc865`
-* `utdemir/ghc-musl:v2-ghc881`
+* `utdemir/ghc-musl:v3-ghc844`
+* `utdemir/ghc-musl:v3-ghc865`
+* `utdemir/ghc-musl:v3-ghc881`
 
 ## Usage
 
@@ -25,7 +25,7 @@ inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v2-ghc865
+$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v3-ghc865
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build
@@ -39,7 +39,7 @@ host machine:
 ```
 docker:
   enable: true
-  image: ghc-musl:v2-ghc865
+  image: ghc-musl:v3-ghc865
 ```
 
 Make sure to pick an image with the GHC version compatible with the

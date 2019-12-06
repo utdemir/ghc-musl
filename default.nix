@@ -10,7 +10,7 @@ let
 
 user = "utdemir";
 name = "ghc-musl";
-tag = "v2-${compiler}";
+tag = "v3-${compiler}";
 
 pkgsMusl = pkgsOrig.pkgsMusl;
 haskell = pkgsMusl.haskell;
