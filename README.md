@@ -25,7 +25,7 @@ inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v1-ghc865
+$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v2-ghc865
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build
@@ -39,8 +39,11 @@ host machine:
 ```
 docker:
   enable: true
-  image: ghc-musl:v1-ghc865
+  image: ghc-musl:v2-ghc865
 ```
+
+Make sure to pick an image with the GHC version compatible with the
+Stackage resolver you are using.
 
 ## Development
 
@@ -62,4 +65,3 @@ newer compiler version.
 
 * https://github.com/nh2/static-haskell-nix
 * https://github.com/fpco/docker-static-haskell
-
