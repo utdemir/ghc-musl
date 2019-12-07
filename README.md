@@ -57,10 +57,6 @@ at [utdemir.cachix.org]().
 Feel free to open an issue or send a PR to add a library or support a
 newer compiler version.
 
-## TODO
-
-* Support using `integer-simple` instead of `libgmp`.
-
 ## Related
 
 * https://github.com/nh2/static-haskell-nix
