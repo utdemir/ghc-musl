@@ -1,3 +1,11 @@
+{lib, tags}:
+
+let
+repo = "utdemir/ghc-musl";
+sampleTag = lib.head tags;
+in
+
+''
 # ghc-musl
 
 This repository provides Docker images with GHC compiled with `musl`;
@@ -9,11 +17,10 @@ used libraries and build tools.
 
 Here are the latest images currently published in Docker Hub:
 
-* `utdemir/ghc-musl:v4-libgmp-ghc881`
-* `utdemir/ghc-musl:v4-integer-simple-ghc881`
-* `utdemir/ghc-musl:v4-libgmp-ghc865`
-* `utdemir/ghc-musl:v4-integer-simple-ghc865`
-* `utdemir/ghc-musl:v4-libgmp-ghc844`
+${lib.concatMapStringsSep
+    "\n"
+    (t: "* `${repo}:${t}`")
+    tags }
 
 ## Usage
 
@@ -27,7 +34,7 @@ inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v4-libgmp-ghc881
+$ docker run -itv $(pwd):/mnt ${repo}:${sampleTag}
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build
@@ -41,7 +48,7 @@ host machine:
 ```
 docker:
   enable: true
-  image: utdemir/ghc-musl:v4-libgmp-ghc881
+  image: ${repo}:${sampleTag}
 ```
 
 Make sure to pick an image with the GHC version compatible with the
@@ -63,3 +70,4 @@ newer compiler version.
 
 * https://github.com/nh2/static-haskell-nix
 * https://github.com/fpco/docker-static-haskell
+''

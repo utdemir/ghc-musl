@@ -77,6 +77,7 @@ image = pkgsOrig.dockerTools.buildImage {
 in
 
 {
+  tag=tag;
   image=image;
   upload = pkgsOrig.writeScript "upload-${name}-${tag}" ''
     #!/usr/bin/env bash

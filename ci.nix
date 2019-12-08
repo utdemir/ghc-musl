@@ -14,17 +14,23 @@ sources = import ./nix/sources.nix;
 pkgs = import sources.nixpkgs {};
 lib = pkgs.lib;
 
+drvs = builtins.map (import ./default.nix) flavours;
+
 in
 rec {
-  images =
-    [ lib.map flavours (c: (build c).image) ];
+  images = builtins.map (c: c.image) drvs;
 
   uploadAll = pkgs.writeScript "uploadAll" ''
     #!/usr/bin/env bash
     set -xe
     ${lib.concatMapStringsSep
         "\n"
-        (c: "${(build c).upload}")
-        flavours}
+        (c: "${c.upload}")
+        drvs}
   '';
+
+  readme =
+    pkgs.writeText
+      "README.md"
+      (import ./readme.nix { inherit lib; tags = builtins.map (c: c.tag) drvs; });
 }
