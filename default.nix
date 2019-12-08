@@ -13,8 +13,8 @@ user = "utdemir";
 name = "ghc-musl";
 tag = lib.concatStringsSep "-" [
   "v4"
-  compiler
   (if integer-simple then "integer-simple" else "libgmp")
+  compiler
 ];
 
 pkgsMusl = pkgsOrig.pkgsMusl;
