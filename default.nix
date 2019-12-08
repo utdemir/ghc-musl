@@ -3,20 +3,28 @@ sources = import ./nix/sources.nix;
 in
 
 { pkgsOrig ? import sources.nixpkgs { config.allowBroken = true; }
-, compiler ? "ghc865"
+, compiler
+, integer-simple
 }:
 
 let
 
 user = "utdemir";
 name = "ghc-musl";
-tag = "v3-${compiler}";
+tag = lib.concatStringsSep "-" [
+  "v4"
+  compiler
+  (if integer-simple then "integer-simple" else "libgmp")
+];
 
 pkgsMusl = pkgsOrig.pkgsMusl;
 haskell = pkgsMusl.haskell;
 lib = pkgsMusl.stdenv.lib;
 
-haskellPackages = haskell.packages.${compiler}.override {
+haskellPackages =
+  (if integer-simple
+   then haskell.packages.integer-simple
+   else haskell.packages).${compiler}.override {
   overrides = se: su: {
   };
 };
@@ -25,8 +33,7 @@ libraries = with pkgsMusl; [
   musl
   zlib zlib.static
   libffi (libffi.override { stdenv = makeStaticLibraries stdenv; })
-  gmp (gmp.override { withStatic = true; })
-];
+] ++ lib.optionals (!integer-simple) [ gmp (gmp.override { withStatic = true; }) ];
 
 packages = with pkgsMusl; [
   bash coreutils gnused gnugrep gawk

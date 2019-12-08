@@ -1,7 +1,14 @@
 let
 
-compilers = [ "ghc844" "ghc865" "ghc881" ];
-build = c: import ./default.nix { compiler=c; };
+flavours = [
+  { compiler="ghc881"; integer-simple=false; }
+  { compiler="ghc881"; integer-simple=true;  }
+  { compiler="ghc865"; integer-simple=false; }
+  { compiler="ghc865"; integer-simple=true;  }
+  { compiler="ghc844"; integer-simple=false; }
+];
+
+build = import ./default.nix;
 
 sources = import ./nix/sources.nix;
 pkgs = import sources.nixpkgs {};
@@ -10,8 +17,7 @@ lib = pkgs.lib;
 in
 rec {
   images =
-    pkgs.recurseIntoAttrs (
-      lib.genAttrs compilers (c: (build c).build));
+    [ lib.map flavours (c: (build c).image) ];
 
   uploadAll = pkgs.writeScript "uploadAll" ''
     #!/usr/bin/env bash
@@ -19,6 +25,6 @@ rec {
     ${lib.concatMapStringsSep
         "\n"
         (c: "${(build c).upload}")
-        compilers}
+        flavours}
   '';
 }
