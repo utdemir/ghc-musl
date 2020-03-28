@@ -33,6 +33,7 @@ libraries = with pkgsMusl; [
   musl
   zlib zlib.static
   libffi (libffi.override { stdenv = makeStaticLibraries stdenv; })
+  ncurses (ncurses.override { enableStatic = true; })
 ] ++ lib.optionals (!integer-simple) [ gmp (gmp.override { withStatic = true; }) ];
 
 packages = with pkgsMusl; [
