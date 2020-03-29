@@ -12,7 +12,7 @@ let
 user = "utdemir";
 name = "ghc-musl";
 tag = lib.concatStringsSep "-" [
-  "v4"
+  "v5"
   (if integer-simple then "integer-simple" else "libgmp")
   compiler
 ];
