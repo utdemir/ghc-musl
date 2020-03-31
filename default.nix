@@ -12,7 +12,7 @@ let
 user = "utdemir";
 name = "ghc-musl";
 tag = lib.concatStringsSep "-" [
-  "v5"
+  "v6"
   (if integer-simple then "integer-simple" else "libgmp")
   compiler
 ];
@@ -29,12 +29,18 @@ haskellPackages =
   };
 };
 
-libraries = with pkgsMusl; [
-  musl
-  zlib zlib.static
-  libffi (libffi.override { stdenv = makeStaticLibraries stdenv; })
-  ncurses (ncurses.override { enableStatic = true; })
-] ++ lib.optionals (!integer-simple) [ gmp (gmp.override { withStatic = true; }) ];
+libraries =
+  let ncursesTerminfoOverride = c: c.overrideDerivation (old: {
+      configureFlags = old.configureFlags ++
+        [ "--with-terminfo-dirs=${lib.makeSearchPath "terminfo" [ "/lib" "/etc" "/usr/share" ]}" ];
+  });
+  in with pkgsMusl; [
+    musl
+    zlib zlib.static
+    libffi (libffi.override { stdenv = makeStaticLibraries stdenv; })
+    (ncursesTerminfoOverride ncurses)
+    (ncursesTerminfoOverride (ncurses.override { enableStatic = true; }))
+  ] ++ lib.optionals (!integer-simple) [ gmp (gmp.override { withStatic = true; }) ];
 
 packages = with pkgsMusl; [
   bash coreutils gnused gnugrep gawk
