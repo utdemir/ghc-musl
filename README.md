@@ -9,11 +9,11 @@ used libraries and build tools.
 
 Here are the latest images currently published in Docker Hub:
 
-* `utdemir/ghc-musl:v5-libgmp-ghc881`
-* `utdemir/ghc-musl:v5-integer-simple-ghc881`
-* `utdemir/ghc-musl:v5-libgmp-ghc865`
-* `utdemir/ghc-musl:v5-integer-simple-ghc865`
-* `utdemir/ghc-musl:v5-libgmp-ghc844`
+* `utdemir/ghc-musl:v6-libgmp-ghc881`
+* `utdemir/ghc-musl:v6-integer-simple-ghc881`
+* `utdemir/ghc-musl:v6-libgmp-ghc865`
+* `utdemir/ghc-musl:v6-integer-simple-ghc865`
+* `utdemir/ghc-musl:v6-libgmp-ghc844`
 
 ## Usage
 
@@ -27,7 +27,7 @@ inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v5-libgmp-ghc881
+$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v6-libgmp-ghc881
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build
@@ -41,7 +41,7 @@ host machine:
 ```
 docker:
   enable: true
-  image: utdemir/ghc-musl:v5-libgmp-ghc881
+  image: utdemir/ghc-musl:v6-libgmp-ghc881
 ```
 
 Make sure to pick an image with the GHC version compatible with the
