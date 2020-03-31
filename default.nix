@@ -46,10 +46,11 @@ packages = with pkgsMusl; [
   (haskell.lib.justStaticExecutables haskellPackages.cabal-install)
 ];
 
+contents = packages ++ libraries;
+
 layered = pkgsOrig.dockerTools.buildLayeredImage {
   name = "${name}-layers";
-  inherit tag;
-  contents = packages ++ libraries;
+  inherit tag contents;
 };
 
 image = pkgsOrig.dockerTools.buildImage {
@@ -78,8 +79,7 @@ image = pkgsOrig.dockerTools.buildImage {
 in
 
 {
-  tag=tag;
-  image=image;
+  inherit tag image contents;
   upload = pkgsOrig.writeScript "upload-${name}-${tag}" ''
     #!/usr/bin/env bash
     set -x

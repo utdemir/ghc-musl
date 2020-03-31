@@ -8,8 +8,6 @@ flavours = [
   { compiler="ghc844"; integer-simple=false; }
 ];
 
-build = import ./default.nix;
-
 sources = import ./nix/sources.nix;
 pkgs = import sources.nixpkgs {};
 lib = pkgs.lib;
@@ -19,6 +17,7 @@ drvs = builtins.map (import ./default.nix) flavours;
 in
 rec {
   images = builtins.map (c: c.image) drvs;
+  contents = builtins.map (c: c.contents) drvs;
 
   uploadAll = pkgs.writeScript "uploadAll" ''
     #!/usr/bin/env bash
