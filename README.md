@@ -61,5 +61,6 @@ newer compiler version.
 
 ## Related
 
-* https://github.com/nh2/static-haskell-nix
-* https://github.com/fpco/docker-static-haskell
+* Without using Nix: https://gitlab.com/neosimsim/docker-builder-images
+* Without using Docker: https://github.com/nh2/static-haskell-nix
+* Not maintained: https://github.com/fpco/docker-static-haskell
