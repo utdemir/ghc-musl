@@ -1,11 +1,12 @@
 let
 
 flavours = [
-  { compiler="ghc881"; integer-simple=false; }
-  { compiler="ghc881"; integer-simple=true;  }
+  { compiler="ghc8101"; integer-simple=false; }
+  { compiler="ghc8101"; integer-simple=true;  }
+  { compiler="ghc883"; integer-simple=false; }
+  { compiler="ghc883"; integer-simple=true;  }
   { compiler="ghc865"; integer-simple=false; }
   { compiler="ghc865"; integer-simple=true;  }
-  { compiler="ghc844"; integer-simple=false; }
 ];
 
 sources = import ./nix/sources.nix;

@@ -1,0 +1,13 @@
+name: example
+version: 0.0.1
+license: BSD3
+cabal-version: >= 1.6
+build-type: Simple
+
+executable example
+  main-is: Main.hs
+  ghc-options: -static -optl-static -optl-pthread -fPIC
+  build-depends: base >= 4.2 && < 5
+               , digest
+               , bytestring
+
