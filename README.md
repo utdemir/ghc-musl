@@ -5,7 +5,8 @@ therefore can be used to create fully static Haskell binaries without
 `glibc` dependency on any platform which can run Docker (x86_64).
 
 Images come with `ghc` and `cabal` executables alongside with commonly
-used libraries and build tools.
+used libraries and tools. They can also be used with the `stack`
+build tool.
 
 Here are the latest images currently published in Docker Hub:
 
