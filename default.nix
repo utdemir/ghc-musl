@@ -48,6 +48,7 @@ libraries =
   in with pkgsMusl; [
     musl
     zlib zlib.static
+    curl.out (libcurl.override { stdenv = makeStaticLibraries stdenv; }).out
     libffi (libffi.override { stdenv = makeStaticLibraries stdenv; })
     (ncursesTerminfoOverride ncurses)
     (ncursesTerminfoOverride (ncurses.override { enableStatic = true; }))
@@ -57,7 +58,7 @@ packages = with pkgsMusl; [
   bash coreutils gnused gnugrep gawk
   binutils binutils-unwrapped
   gcc pkgconfig automake autoconf
-  shadow cacert
+  shadow cacert git curl
 ] ++ [
   haskellPackages.ghc
   (haskell.lib.justStaticExecutables haskellPackages.cabal-install)
