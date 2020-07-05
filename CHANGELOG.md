@@ -1,5 +1,11 @@
 # v7
 
+* New libraries: libcurl
+* New executables: git, curl
+* Package updates
+
+# v7
+
 * New compilers: ghc883, ghc8101
 * Dropped compilers: ghc844, ghc881
 * Package updates
