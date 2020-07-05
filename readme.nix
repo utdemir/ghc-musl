@@ -13,7 +13,8 @@ therefore can be used to create fully static Haskell binaries without
 `glibc` dependency on any platform which can run Docker (x86_64).
 
 Images come with `ghc` and `cabal` executables alongside with commonly
-used libraries and build tools.
+used libraries and build tools. They can also be used with the `stack`
+build tool using its Docker integration.
 
 Here are the latest images currently published in Docker Hub:
 
@@ -68,6 +69,7 @@ newer compiler version.
 
 ## Related
 
-* https://github.com/nh2/static-haskell-nix
-* https://github.com/fpco/docker-static-haskell
+* Without using Nix: <https://gitlab.com/neosimsim/docker-builder-images>
+* Without using Docker: <https://github.com/nh2/static-haskell-nix>
+* Not maintained: <https://github.com/fpco/docker-static-haskell>
 ''

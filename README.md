@@ -5,17 +5,17 @@ therefore can be used to create fully static Haskell binaries without
 `glibc` dependency on any platform which can run Docker (x86_64).
 
 Images come with `ghc` and `cabal` executables alongside with commonly
-used libraries and tools. They can also be used with the `stack`
-build tool.
+used libraries and build tools. They can also be used with the `stack`
+build tool using its Docker integration.
 
 Here are the latest images currently published in Docker Hub:
 
-* `utdemir/ghc-musl:v7-libgmp-ghc8101`
-* `utdemir/ghc-musl:v7-integer-simple-ghc8101`
-* `utdemir/ghc-musl:v7-libgmp-ghc883`
-* `utdemir/ghc-musl:v7-integer-simple-ghc883`
-* `utdemir/ghc-musl:v7-libgmp-ghc865`
-* `utdemir/ghc-musl:v7-integer-simple-ghc865`
+* `utdemir/ghc-musl:v8-libgmp-ghc8101`
+* `utdemir/ghc-musl:v8-integer-simple-ghc8101`
+* `utdemir/ghc-musl:v8-libgmp-ghc883`
+* `utdemir/ghc-musl:v8-integer-simple-ghc883`
+* `utdemir/ghc-musl:v8-libgmp-ghc865`
+* `utdemir/ghc-musl:v8-integer-simple-ghc865`
 
 ## Usage
 
@@ -29,7 +29,7 @@ inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v7-libgmp-ghc8101
+$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v8-libgmp-ghc8101
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build
@@ -43,7 +43,7 @@ host machine:
 ```
 docker:
   enable: true
-  image: utdemir/ghc-musl:v7-libgmp-ghc8101
+  image: utdemir/ghc-musl:v8-libgmp-ghc8101
 ```
 
 Make sure to pick an image with the GHC version compatible with the
@@ -63,6 +63,6 @@ newer compiler version.
 
 ## Related
 
-* Without using Nix: https://gitlab.com/neosimsim/docker-builder-images
-* Without using Docker: https://github.com/nh2/static-haskell-nix
-* Not maintained: https://github.com/fpco/docker-static-haskell
+* Without using Nix: <https://gitlab.com/neosimsim/docker-builder-images>
+* Without using Docker: <https://github.com/nh2/static-haskell-nix>
+* Not maintained: <https://github.com/fpco/docker-static-haskell>

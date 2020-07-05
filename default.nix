@@ -20,14 +20,12 @@ pkgsOrig =
 user = "utdemir";
 name = "ghc-musl";
 tag = lib.concatStringsSep "-" [
-  "v7"
+  "v8"
   (if integer-simple then "integer-simple" else "libgmp")
   compiler
 ];
 
-pkgsMusl = pkgsOrig.pkgsMusl.extend (se: su: {
-  fetchgit = pkgsOrig.fetchgit;
-});
+pkgsMusl = pkgsOrig.pkgsMusl;
 
 haskell = pkgsMusl.haskell;
 lib = pkgsMusl.stdenv.lib;
@@ -48,7 +46,7 @@ libraries =
   in with pkgsMusl; [
     musl
     zlib zlib.static
-    curl.out (libcurl.override { stdenv = makeStaticLibraries stdenv; }).out
+    curl.out (curl.override { stdenv = makeStaticLibraries stdenv; }).out
     libffi (libffi.override { stdenv = makeStaticLibraries stdenv; })
     (ncursesTerminfoOverride ncurses)
     (ncursesTerminfoOverride (ncurses.override { enableStatic = true; }))
@@ -58,7 +56,7 @@ packages = with pkgsMusl; [
   bash coreutils gnused gnugrep gawk
   binutils binutils-unwrapped
   gcc pkgconfig automake autoconf
-  shadow cacert git curl
+  shadow cacert gitMinimal curl
 ] ++ [
   haskellPackages.ghc
   (haskell.lib.justStaticExecutables haskellPackages.cabal-install)
