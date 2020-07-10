@@ -1,4 +1,10 @@
-# v7
+# v9
+
+* New libraries: libcurl
+* New executables: git, curl
+* Package updates
+
+# v8
 
 * New libraries: libcurl
 * New executables: git, curl

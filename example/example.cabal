@@ -10,4 +10,3 @@ executable example
   build-depends: base >= 4.2 && < 5
                , digest
                , bytestring
-
