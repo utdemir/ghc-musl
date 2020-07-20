@@ -7,6 +7,7 @@ build-type: Simple
 executable example
   main-is: Main.hs
   ghc-options: -static -optl-static -optl-pthread -fPIC
-  build-depends: base >= 4.2 && < 5
+  build-depends: base
                , digest
                , bytestring
+               , ghc-musl-test-dep

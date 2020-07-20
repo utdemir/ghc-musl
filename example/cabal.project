@@ -1,0 +1,5 @@
+source-repository-package
+  type: git
+  location: git://github.com/utdemir/ghc-musl-test-dep.git
+
+packages: *.cabal
