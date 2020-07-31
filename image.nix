@@ -19,7 +19,7 @@ pkgsOrig =
 
 name = "utdemir/ghc-musl";
 tag = lib.concatStringsSep "-" [
-  "v8"
+  "v10"
   (if integer-simple then "integer-simple" else "libgmp")
   compiler
 ];
@@ -89,6 +89,7 @@ image = pkgsOrig.dockerTools.buildImage {
       "LD_LIBRARY_PATH=${lib.makeLibraryPath libraries}"
       "C_INCLUDE_PATH=${lib.makeSearchPathOutput "dev" "include" libraries}"
       "NIX_LDFLAGS_x86_64_unknown_linux_musl=${lib.concatMapStringsSep " " (s: "-L${lib.getOutput "lib" s}/lib") libraries}"
+      "SSL_CERT_FILE=${pkgsMusl.cacert}/etc/ssl/certs/ca-bundle.crt"
     ];
   };
 };

@@ -10,12 +10,12 @@ build tool using its Docker integration.
 
 Here are the latest images currently published in Docker Hub:
 
-* `utdemir/ghc-musl:v8-libgmp-ghc8101`
-* `utdemir/ghc-musl:v8-integer-simple-ghc8101`
-* `utdemir/ghc-musl:v8-libgmp-ghc883`
-* `utdemir/ghc-musl:v8-integer-simple-ghc883`
-* `utdemir/ghc-musl:v8-libgmp-ghc865`
-* `utdemir/ghc-musl:v8-integer-simple-ghc865`
+* `utdemir/ghc-musl:v10-libgmp-ghc8101`
+* `utdemir/ghc-musl:v10-integer-simple-ghc8101`
+* `utdemir/ghc-musl:v10-libgmp-ghc883`
+* `utdemir/ghc-musl:v10-integer-simple-ghc883`
+* `utdemir/ghc-musl:v10-libgmp-ghc865`
+* `utdemir/ghc-musl:v10-integer-simple-ghc865`
 
 ## Usage
 
@@ -29,7 +29,7 @@ inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v8-libgmp-ghc8101
+$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v10-libgmp-ghc8101
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build
@@ -43,7 +43,7 @@ host machine:
 ```
 docker:
   enable: true
-  image: utdemir/ghc-musl:v8-libgmp-ghc8101
+  image: utdemir/ghc-musl:v10-libgmp-ghc8101
 ```
 
 Make sure to pick an image with the GHC version compatible with the

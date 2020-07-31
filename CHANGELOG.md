@@ -1,3 +1,7 @@
+# v10
+
+* bugfix: make sure that curl can find SSL certificates
+
 # v9
 
 * New libraries: libcurl
