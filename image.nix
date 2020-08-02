@@ -58,6 +58,7 @@ packages = with pkgsMusl; [
   binutils binutils-unwrapped
   gcc pkgconfig automake autoconf
   shadow cacert gitMinimal curl
+  findutils perl gzip file
 ] ++ [
   haskellPackages.ghc
   (haskell.lib.justStaticExecutables haskellPackages.cabal-install)
