@@ -1,3 +1,7 @@
+# v11
+
+* New executables: find, xargs, perl, gzip, file
+
 # v10
 
 * bugfix: make sure that curl can find SSL certificates

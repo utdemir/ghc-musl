@@ -19,7 +19,7 @@ pkgsOrig =
 
 name = "utdemir/ghc-musl";
 tag = lib.concatStringsSep "-" [
-  "v10"
+  "v11"
   (if integer-simple then "integer-simple" else "libgmp")
   compiler
 ];
