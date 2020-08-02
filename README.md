@@ -19,25 +19,25 @@ Here are the latest images currently published in Docker Hub:
 
 ## Usage
 
-Add `ghc-options: -static -optl-static -optl-pthread -fPIC` flags to
-your cabal file.
-
 ### cabal-install
 
 Mount the project directory to the container, and use `cabal-install`
-inside the container:
+with `--enable-executable-static` flag inside the container:
 
 ```
 $ cd myproject/
 $ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v10-libgmp-ghc8101
 sh$ cd /mnt
 sh$ cabal new-update
-sh$ cabal new-build
+sh$ cabal new-build --enable-executable-static
 ```
+
+You can also set `executable-static` [option](https://cabal.readthedocs.io/en/latest/cabal-project.html#cfg-field-executable-static) on your `cabal.project `file.
 
 ### stack
 
-Add these lines to your `stack.yaml`, and use `stack` as usual on the
+Add `ghc-options: -static -optl-static -optl-pthread -fPIC` flags to the `executable` section
+of your `cabal` file and these lines to your `stack.yaml`, and use `stack` as usual on the
 host machine:
 
 ```
@@ -48,6 +48,9 @@ docker:
 
 Make sure to pick an image with the GHC version compatible with the
 Stackage resolver you are using.
+
+Follow https://github.com/commercialhaskell/stack/issues/3420 for
+more details on static compilation using the Stack build tool.
 
 ## Development
 
