@@ -48,6 +48,9 @@ libraries =
     musl
     zlib zlib.static
     curl.out (curl.override { stdenv = makeStaticLibraries stdenv; }).out
+    pcre.dev pcre.out (pcre.override { stdenv = makeStaticLibraries stdenv; }).out
+    pcre2.dev pcre2.out (pcre2.override { stdenv = makeStaticLibraries stdenv; }).out
+    curl.out (curl.override { stdenv = makeStaticLibraries stdenv; }).out
     libffi (libffi.override { stdenv = makeStaticLibraries stdenv; })
     (ncursesTerminfoOverride ncurses)
     (ncursesTerminfoOverride (ncurses.override { enableStatic = true; }))
