@@ -82,7 +82,7 @@ image = pkgsOrig.dockerTools.buildImage {
   '';
   diskSize = 8192;
   config = {
-    Cmd = [ "${pkgsMusl.bash}/bin/sh" ];
+    Cmd = [ "/bin/bash" ];
     Env = [
       "PATH=${lib.makeSearchPath "bin" packages}:/bin"
       "NIX_CC_WRAPPER_TARGET_TARGET_x86_64_unknown_linux_musl=1"
