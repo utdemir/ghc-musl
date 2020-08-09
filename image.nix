@@ -56,13 +56,16 @@ libraries =
     (ncursesTerminfoOverride (ncurses.override { enableStatic = true; }))
   ] ++ lib.optionals (!integer-simple) [ gmp (gmp.override { withStatic = true; }) ];
 
-packages = with pkgsMusl; [
-  bash coreutils gnused gnugrep gawk
-  binutils binutils-unwrapped
+packages = (with pkgsMusl; [
+  coreutils gitMinimal
+  binutils binutils-unwrapped curl
   gcc pkgconfig automake autoconf
-  shadow cacert gitMinimal curl
+]) ++ (with pkgsOrig; [
+  bash gnused gnugrep gawk
+  shadow cacert
   findutils perl gzip file
-] ++ [
+  gnutar dpkg fakeroot
+]) ++ [
   haskellPackages.ghc
   (haskell.lib.justStaticExecutables haskellPackages.cabal-install)
 ];
