@@ -1,3 +1,8 @@
+# v12
+
+* New libraries: pcre, pcre2
+* New executables: tar, dpkg, fakeroot
+
 # v11
 
 * New executables: find, xargs, perl, gzip, file
