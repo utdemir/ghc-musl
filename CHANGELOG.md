@@ -1,3 +1,7 @@
+# v13
+
+* New libraries: bzip2, openssl
+
 # v12
 
 * New libraries: pcre, pcre2
