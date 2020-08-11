@@ -17,6 +17,42 @@ Here are the latest images currently published in Docker Hub:
 * `utdemir/ghc-musl:v13-libgmp-ghc865`
 * `utdemir/ghc-musl:v13-integer-simple-ghc865`
 
+## Example session
+
+Below shell session shows how to start a pre-compiled docker container and compile a simple `Hello.hs` as a static executable.
+
+### Compiling static executable
+```
+$ docker run -itv $(pwd):/mnt utdemir/ghc-musl:v13-integer-simple-ghc8101
+bash-4.4# cd /mnt/
+bash-4.4# cat Hello.hs
+main = putStrLn "Hello"
+bash-4.4# ghc --make -optl-static -optl-pthread Hello.hs
+[1 of 1] Compiling Main             ( Hello.hs, Hello.o )
+Linking Hello ...
+bash-4.4# ls -al Hello
+-rwxr-xr-x 1 root root 1185056 Aug 11 16:55 Hello
+bash-4.4# file Hello
+Hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, with debug_info, not stripped
+bash-4.4# ldd ./Hello
+ldd: ./Hello: Not a valid dynamic program
+```
+
+### Testing static executable
+We can run resulting executable in different containers:
+
+```
+$ docker run -itv $(pwd):/mnt alpine
+# /mnt/Hello
+Hello
+```
+
+```
+$ docker run -itv $(pwd):/mnt centos
+[root@94eb29dcdfe6 /]# /mnt/Hello
+Hello
+```
+
 ## Usage
 
 ### cabal-install
