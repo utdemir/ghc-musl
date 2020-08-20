@@ -1,8 +1,16 @@
+<!--
+
+WARNING: This file is auto-generated from ./update-readme.sh, modify
+that instead.
+
+-->
+
 # ghc-musl
 
 This repository provides Docker images with GHC compiled with `musl`;
 therefore can be used to create fully static Haskell binaries without
-`glibc` dependency on any platform which can run Docker (x86_64).
+`glibc` dependency on any platform which can run Docker (x86_64). Powered
+by [ghcup](https://www.haskell.org/ghcup/).
 
 Images come with `ghc` and `cabal` executables alongside with commonly
 used libraries and build tools. They can also be used with the `stack`
