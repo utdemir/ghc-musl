@@ -8,14 +8,12 @@ function trace() {
     "$@"
 }
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-CONFIG="$DIR/config.json"
-
-VERSION="$(jq -r '.version' "$CONFIG")"
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+VERSION="$(jq -r '.version' config.json)"
 
 declare -a tags
 
-jq -c '.flavours[]' "$CONFIG" | {
+jq -c '.flavours[]' config.json | {
 while read params; do
   ghc_version="$(
     echo "$params" \
@@ -37,7 +35,7 @@ while read params; do
   tmpdir="$(mktemp -d)"
   image="$(
     docker build \
-      -f "$DIR/Dockerfile" \
+      -f "Dockerfile" \
       $args \
       "$(mktemp -d)" \
       | tee /dev/stderr \
@@ -53,9 +51,10 @@ while read params; do
   tags+=("$target_tag")
 done
 
-echo "Done. Created tags:"
+echo "Done, written TAGS."
+echo -n >TAGS
 for tag in "${tags[@]}"
 do
-     echo "$tag"
+     echo "$tag" >> TAGS
 done
 }
