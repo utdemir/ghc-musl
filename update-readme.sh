@@ -108,6 +108,6 @@ export ALL_TAGS="$(cat TAGS | sed 's/^/* /g')"
 export EXAMPLE_TAG="$(head -n 1 TAGS | tr -d '\n')"
 
 echo "$template" \
-  | envsubst '${ALL_TAGS} ${EXAMPLE_TAG}'
+  | envsubst '${ALL_TAGS} ${EXAMPLE_TAG}' \
   > README.md
 
