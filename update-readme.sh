@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+read -r -d '' template <<'EOF' || true
 <!--
 
 WARNING: This file is auto-generated from ./update-readme.sh, modify
@@ -18,9 +25,7 @@ build tool using its Docker integration.
 
 Here are the latest images currently published in Docker Hub:
 
-* utdemir/ghc-musl:v14-ghc8101
-* utdemir/ghc-musl:v14-ghc884
-* utdemir/ghc-musl:v14-ghc865
+${ALL_TAGS}
 
 ## Usage
 
@@ -31,7 +36,7 @@ with `--enable-executable-static` flag inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v14-ghc8101
+$ docker run -itv $PWD:/mnt ${EXAMPLE_TAG}
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build --enable-executable-static
@@ -48,7 +53,7 @@ the `executable` section of your `cabal` file and these lines to your
 ```
 docker:
   enable: true
-  image: utdemir/ghc-musl:v14-ghc8101
+  image: ${EXAMPLE_TAG}
 ```
 
 Make sure to pick an image with the GHC version compatible with the
@@ -63,7 +68,7 @@ Below shell session shows how to start a pre-compiled docker container
 and compile a simple `Hello.hs` as a static executable:
 
 ```
-$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v14-ghc8101
+$ docker run -itv $PWD:/mnt ${EXAMPLE_TAG}
 bash-4.4# cd /mnt/
 bash-4.4# cat Hello.hs
 main = putStrLn "Hello"
@@ -102,3 +107,15 @@ newer compiler version.
 * <https://gitlab.com/neosimsim/docker-builder-images>
 * Using Nix: <https://github.com/nh2/static-haskell-nix>
 * Not maintained: <https://github.com/fpco/docker-static-haskell>
+EOF
+
+
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+
+export ALL_TAGS="$(cat TAGS | sed 's/^/* /g')"
+export EXAMPLE_TAG="$(head -n 1 TAGS | tr -d '\n')"
+
+echo "$template" \
+  | envsubst '${ALL_TAGS} ${EXAMPLE_TAG}' \
+  > README.md
+

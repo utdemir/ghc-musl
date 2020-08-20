@@ -1,3 +1,7 @@
+# v14
+
+* Build system revamp, now based on Alpine.
+
 # v13
 
 * New libraries: bzip2, openssl
