@@ -3,7 +3,5 @@
 set -o xtrace
 set -o errexit
 
-cabal new-update
-
 cd /mnt
 cabal new-build example --enable-executable-static
