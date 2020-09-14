@@ -17,6 +17,7 @@ RUN apk add \
       curl libcurl curl-static \
       zlib zlib-dev zlib-static
 
+ENV GHCUP_INSTALL_BASE_PREFIX=/usr/local
 RUN curl --fail -o /bin/ghcup \
       'https://downloads.haskell.org/ghcup/x86_64-linux-ghcup' \
       && chmod +x /bin/ghcup
@@ -29,6 +30,6 @@ ARG CABAL_VERSION
 RUN ghcup install cabal "$CABAL_VERSION" \
       && ghcup set cabal "$CABAL_VERSION"
 
-ENV PATH="/root/.cabal/bin:/root/.ghcup/bin:$PATH"
+ENV PATH="/usr/local/.ghcup/bin:$PATH"
 
 RUN cabal new-update
