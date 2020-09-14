@@ -1,3 +1,8 @@
+# v15
+
+* Install GHC under /usr/local instead of /root/
+* GHC 8.10.1 -> 8.10.2
+
 # v14
 
 * Build system revamp, now based on Alpine.

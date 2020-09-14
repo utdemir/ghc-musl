@@ -18,9 +18,9 @@ build tool using its Docker integration.
 
 Here are the latest images currently published in Docker Hub:
 
-* utdemir/ghc-musl:v14-ghc8101
-* utdemir/ghc-musl:v14-ghc884
-* utdemir/ghc-musl:v14-ghc865
+* utdemir/ghc-musl:v15-ghc8102
+* utdemir/ghc-musl:v15-ghc884
+* utdemir/ghc-musl:v15-ghc865
 
 ## Usage
 
@@ -31,7 +31,7 @@ with `--enable-executable-static` flag inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v14-ghc8101
+$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v15-ghc8102
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build --enable-executable-static
@@ -48,7 +48,7 @@ the `executable` section of your `cabal` file and these lines to your
 ```
 docker:
   enable: true
-  image: utdemir/ghc-musl:v14-ghc8101
+  image: utdemir/ghc-musl:v15-ghc8102
 ```
 
 Make sure to pick an image with the GHC version compatible with the
@@ -63,7 +63,7 @@ Below shell session shows how to start a pre-compiled docker container
 and compile a simple `Hello.hs` as a static executable:
 
 ```
-$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v14-ghc8101
+$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v15-ghc8102
 bash-4.4# cd /mnt/
 bash-4.4# cat Hello.hs
 main = putStrLn "Hello"

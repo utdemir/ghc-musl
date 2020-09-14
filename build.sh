@@ -45,7 +45,7 @@ while read params; do
   rmdir "$tmpdir"
 
   trace docker tag "$image" "$target_tag-dev"
-  trace "$DIR/test/test.sh" "$target_tag-dev"
+  trace "./test/test.sh" "$target_tag-dev"
   trace docker tag "$image" "$target_tag"
 
   tags+=("$target_tag")
