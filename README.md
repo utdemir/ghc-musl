@@ -41,17 +41,13 @@ You can also set `executable-static` [option](https://cabal.readthedocs.io/en/la
 
 ### stack
 
-Use these options, or add them to your `stack.yaml` if you prefer:
-
-
-Add `ghc-options: -static -optl-static -optl-pthread -fPIC` flags to
-the `executable` section of your `cabal` file and these lines to your
-`stack.yaml`, and use `stack` as usual on the host machine:
+Use below arguments, or set the relevant options on your `stack.yaml`:
 
 ```
-docker:
-  enable: true
-  image: utdemir/ghc-musl:v16-ghc8102
+stack build \
+  --ghc-options ' -static -optl-static -optl-pthread -fPIC' \
+  --docker --docker-image "utdemir/ghc-musl:v16-ghc8102" \
+  --no-nix
 ```
 
 Make sure to pick an image with the GHC version compatible with the
