@@ -1,3 +1,7 @@
+# v16
+
+* New executables: groupadd, useradd
+
 # v15
 
 * Install GHC under /usr/local instead of /root/

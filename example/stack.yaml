@@ -1,0 +1,11 @@
+resolver: lts-16.15
+
+packages:
+  - .
+
+extra-deps:
+  - git: git://github.com/utdemir/ghc-musl-test-dep.git
+    commit: ed58c22f71211e474705c7232f0b6350cd506d38
+
+install-ghc: false
+skip-ghc-check: true

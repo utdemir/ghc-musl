@@ -1,4 +1,4 @@
-{ "version": "v15"
+{ "version": "v16"
 , "baseImage": "alpine:3.12.0"
 , "flavours":
   [ { "BASE_IMAGE": "alpine:3.12.0"

@@ -5,7 +5,7 @@ RUN apk update \
       && apk add \
            gcc g++ bash git make xz tar binutils-gold \
            perl curl file automake autoconf dpkg \
-           fakeroot findutils
+           fakeroot findutils shadow
 
 RUN apk add \
       gmp-dev ncurses-dev \
