@@ -1,6 +1,8 @@
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
 
+ENV _invalidate_cache=1
+
 RUN apk update \
       && apk add \
            gcc g++ bash git make xz tar binutils-gold \
@@ -21,6 +23,8 @@ ENV GHCUP_INSTALL_BASE_PREFIX=/usr/local
 RUN curl --fail -o /bin/ghcup \
       'https://downloads.haskell.org/ghcup/x86_64-linux-ghcup' \
       && chmod +x /bin/ghcup
+
+RUN ghcup upgrade --target /bin/ghcup
 
 ARG GHC_VERSION
 RUN ghcup install ghc "$GHC_VERSION" \

@@ -11,10 +11,11 @@ function trace() {
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 VERSION="$(jq -r '.version' config.json)"
 
+jq -c '.flavours[]' config.json | {
 declare -a tags
 
-jq -c '.flavours[]' config.json | {
 while read params; do
+  echo "$params"
   ghc_version="$(
     echo "$params" \
       | jq -r '.GHC_VERSION' \
@@ -45,7 +46,7 @@ while read params; do
   rmdir "$tmpdir"
 
   trace docker tag "$image" "$target_tag-dev"
-  trace "./test/test.sh" "$target_tag-dev"
+  echo | trace "./test/test.sh" "$target_tag-dev"
   trace docker tag "$image" "$target_tag"
 
   tags+=("$target_tag")

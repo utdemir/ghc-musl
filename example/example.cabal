@@ -10,7 +10,4 @@ executable example
                , digest
                , bytestring
                , ghc-musl-test-dep
-               , bzlib-conduit
-               , http-client-openssl
                , pcre-light
-

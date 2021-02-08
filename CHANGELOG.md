@@ -1,3 +1,9 @@
+# v17
+
+* New compiler: GHC 9.0.1 with cabal 3.4
+* Updated Alpine version from 3.12 to 3.13
+* Removed compiler: GHC 8.6.5
+
 # v16
 
 * New executables: groupadd, useradd
