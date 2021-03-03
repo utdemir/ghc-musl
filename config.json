@@ -1,8 +1,8 @@
-{ "version": "v17"
+{ "version": "v18"
 , "flavours":
   [ { "BASE_IMAGE": "alpine:3.13.0"
     , "GHC_VERSION": "9.0.1"
-    , "CABAL_VERSION": "3.4.0.0-rc4"
+    , "CABAL_VERSION": "3.4.0.0"
     }
   , { "BASE_IMAGE": "alpine:3.13.0"
     , "GHC_VERSION": "8.10.4"

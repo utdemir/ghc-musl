@@ -1,3 +1,7 @@
+# v18
+
+* Update cabal: 3.4-rc1 -> 3.4
+
 # v17
 
 * New compiler: GHC 9.0.1 with cabal 3.4

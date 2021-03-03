@@ -1,7 +1,7 @@
 ARG BASE_IMAGE
 FROM $BASE_IMAGE
 
-ENV _invalidate_cache=1
+ENV _invalidate_cache=20210303-1
 
 RUN apk update \
       && apk add \
