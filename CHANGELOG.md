@@ -1,3 +1,7 @@
+# v19
+
+* New libraries: sdl, sdl2
+
 # v18
 
 * Update cabal: 3.4-rc1 -> 3.4
