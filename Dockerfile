@@ -17,7 +17,15 @@ RUN apk add \
       pcre pcre-dev pcre2 pcre2-dev \
       bzip2 bzip2-dev bzip2-static \
       curl libcurl curl-static \
-      zlib zlib-dev zlib-static
+      zlib zlib-dev zlib-static \
+      sdl sdl-dev sdl-static \
+      sdl_mixer sdl_mixer-dev \
+      sdl_image sdl_image-dev \
+      sdl2 sdl2-dev \
+      sdl2_mixer sdl2_mixer-dev \
+      sdl2_image sdl2_image-dev \
+      sdl2_ttf sdl2_ttf-dev
+
 
 ENV GHCUP_INSTALL_BASE_PREFIX=/usr/local
 RUN curl --fail -o /bin/ghcup \
