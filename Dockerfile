@@ -44,4 +44,6 @@ RUN ghcup install cabal "$CABAL_VERSION" \
 
 ENV PATH="/usr/local/.ghcup/bin:$PATH"
 
+RUN ln -s /usr/lib/libncursesw.so.6 /usr/lib/libtinfo.so.6
+
 RUN cabal new-update
