@@ -24,7 +24,8 @@ RUN apk add \
       sdl2 sdl2-dev \
       sdl2_mixer sdl2_mixer-dev \
       sdl2_image sdl2_image-dev \
-      sdl2_ttf sdl2_ttf-dev
+      sdl2_ttf sdl2_ttf-dev \
+      freetype freetype-dev freetype-static
 
 
 ENV GHCUP_INSTALL_BASE_PREFIX=/usr/local

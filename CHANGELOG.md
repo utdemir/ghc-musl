@@ -1,3 +1,7 @@
+# Unreleased
+
+* New libraries: freetype
+
 # v19
 
 * New libraries: sdl, sdl2
