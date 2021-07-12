@@ -1,6 +1,7 @@
 # Unreleased
 
-* New libraries: freetype
+* New library: freetype
+* Update Alpine version from 3.13 to 3.14
 
 # v19
 
