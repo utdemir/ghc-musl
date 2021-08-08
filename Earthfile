@@ -45,7 +45,9 @@ base-system:
           sdl2_mixer sdl2_mixer-dev \
           sdl2_image sdl2_image-dev \
           sdl2_ttf sdl2_ttf-dev \
-          freetype freetype-dev freetype-static
+          freetype freetype-dev freetype-static \
+          libpng libpng-static \
+          brotli brotli-static
 
     RUN ln -s /usr/lib/libncursesw.so.6 /usr/lib/libtinfo.so.6
 
