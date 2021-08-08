@@ -16,7 +16,7 @@ Images come with `ghc` and `cabal` executables alongside with commonly
 used libraries and build tools. They can also be used with the `stack`
 build tool using its Docker integration.
 
-Here are the latest images currently published in Docker Hub:
+Here are the latest images currently [published in Docker Hub](https://hub.docker.com/r/utdemir/ghc-musl/tags):
 
 * utdemir/ghc-musl:v20-ghc901
 * utdemir/ghc-musl:v20-ghc8104
