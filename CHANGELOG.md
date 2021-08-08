@@ -1,7 +1,8 @@
-# Unreleased
+# v20
 
-* New library: freetype
+* New library: freetype, libpng, brotli
 * Update Alpine version from 3.13 to 3.14
+* Bugfix: symlink libncurses as libtinfo
 
 # v19
 

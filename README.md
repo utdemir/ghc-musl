@@ -18,9 +18,9 @@ build tool using its Docker integration.
 
 Here are the latest images currently published in Docker Hub:
 
-* utdemir/ghc-musl:v19-ghc901
-* utdemir/ghc-musl:v19-ghc8104
-* utdemir/ghc-musl:v19-ghc884
+* utdemir/ghc-musl:v20-ghc901
+* utdemir/ghc-musl:v20-ghc8104
+* utdemir/ghc-musl:v20-ghc884
 
 ## Usage
 
@@ -31,7 +31,7 @@ with `--enable-executable-static` flag inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v19-ghc901
+$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v20-ghc901
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build --enable-executable-static
@@ -46,7 +46,7 @@ Use below arguments, or set the relevant options on your `stack.yaml`:
 ```
 stack build \
   --ghc-options ' -static -optl-static -optl-pthread -fPIC' \
-  --docker --docker-image "utdemir/ghc-musl:v19-ghc901" \
+  --docker --docker-image "utdemir/ghc-musl:v20-ghc901" \
   --no-nix
 ```
 
@@ -62,7 +62,7 @@ Below shell session shows how to start a pre-compiled docker container
 and compile a simple `Hello.hs` as a static executable:
 
 ```
-$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v19-ghc901
+$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v20-ghc901
 bash-4.4# cd /mnt/
 bash-4.4# cat Hello.hs
 main = putStrLn "Hello"
