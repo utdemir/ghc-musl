@@ -101,6 +101,21 @@ Hello
 Feel free to open an issue or send a PR to add a library or support a
 newer compiler version.
 
+The build process is orchestrated using [Earthly][]. Once it is installed
+(or obtained via "nix-shell -p earthly"), you can use below command to build
+and test all images, and generate an updated `README.md`:
+
+```
+earthly --allow-privileged --artifact +all/README.md
+```
+
+Note: `--allow-privileged` is only necessary because we use Docker-in-Docker
+project to test if the generated images work with `stack`'s Docker support.
+Feel free to comment out `BUILD +test-stack` line to test without passing
+`--allow-privileged`.
+
+[Earthly]: https://earthly.dev
+
 ## Related
 
 * <https://gitlab.com/neosimsim/docker-builder-images>
@@ -111,8 +126,9 @@ EOF
 
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 
-export ALL_TAGS="$(cat TAGS | sed 's/^/* /g')"
-export EXAMPLE_TAG="$(head -n 1 TAGS | tr -d '\n')"
+tags=( "$@" )
+export ALL_TAGS="$(echo "${tags[@]}" | tr ' ' '\n' | sed 's/^/* /g')"
+export EXAMPLE_TAG="${tags[0]}"
 
 echo "$template" \
   | envsubst '${ALL_TAGS} ${EXAMPLE_TAG}' \
