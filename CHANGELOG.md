@@ -1,3 +1,8 @@
+# v21
+
+* ghc: 8.10.4 -> 8.10.7
+* alpine: 3.14.0 -> 3.14.2
+
 # v20
 
 * New library: freetype, libpng, brotli
