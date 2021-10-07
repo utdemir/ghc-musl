@@ -104,7 +104,8 @@ test-cabal:
     # RUN $(cabal list-bin example) | grep 'Hello World!'
 
 test-stack-base:
-    FROM earthly/dind:ubuntu
+    FROM earthly/dind:alpine
+    RUN apk add curl
     RUN curl -sSL https://get.haskellstack.org/ | sh
     COPY example /example
     WORKDIR /example/
