@@ -1,3 +1,8 @@
+# v24
+
+* ghc: 9.2.1 -> 9.2.2 (thanks to @TravisCardwell)
+* alpine: 3.14.0 -> 3.15.0
+
 # v23
 
 * ghc: 9.0.1 -> 9.0.2
