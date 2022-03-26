@@ -1,18 +1,18 @@
 all:
-    FROM alpine:3.14.0
+    FROM alpine:3.15.0
 
     ARG VERSION=23
 
     ENV BASE_TAG=utdemir/ghc-musl:v$VERSION
 
     ENV TAG1=$BASE_TAG-ghc922
-    BUILD --build-arg TAG=$TAG1 --build-arg ALPINE=3.14.2 --build-arg GHC=9.2.2  --build-arg CABAL=3.6.0.0 +tested-result
+    BUILD --build-arg TAG=$TAG1 --build-arg ALPINE=3.15.0 --build-arg GHC=9.2.2  --build-arg CABAL=3.6.0.0 +tested-result
 
     ENV TAG2=$BASE_TAG-ghc902
-    BUILD --build-arg TAG=$TAG2 --build-arg ALPINE=3.14.2 --build-arg GHC=9.0.2  --build-arg CABAL=3.4.0.0 +tested-result
+    BUILD --build-arg TAG=$TAG2 --build-arg ALPINE=3.15.0 --build-arg GHC=9.0.2  --build-arg CABAL=3.4.0.0 +tested-result
 
     ENV TAG3=$BASE_TAG-ghc8107
-    BUILD --build-arg TAG=$TAG3 --build-arg ALPINE=3.14.2 --build-arg GHC=8.10.7 --build-arg CABAL=3.2.0.0 +tested-result
+    BUILD --build-arg TAG=$TAG3 --build-arg ALPINE=3.15.0 --build-arg GHC=8.10.7 --build-arg CABAL=3.2.0.0 +tested-result
 
     RUN apk add bash gettext
     COPY ./update-readme.sh .
