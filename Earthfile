@@ -1,7 +1,7 @@
 all:
     FROM alpine:3.15.0
 
-    ARG VERSION=23
+    ARG VERSION=24
 
     ENV BASE_TAG=utdemir/ghc-musl:v$VERSION
 
