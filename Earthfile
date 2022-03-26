@@ -5,8 +5,8 @@ all:
 
     ENV BASE_TAG=utdemir/ghc-musl:v$VERSION
 
-    ENV TAG1=$BASE_TAG-ghc921
-    BUILD --build-arg TAG=$TAG1 --build-arg ALPINE=3.14.2 --build-arg GHC=9.2.1  --build-arg CABAL=3.6.0.0 +tested-result
+    ENV TAG1=$BASE_TAG-ghc922
+    BUILD --build-arg TAG=$TAG1 --build-arg ALPINE=3.14.2 --build-arg GHC=9.2.2  --build-arg CABAL=3.6.0.0 +tested-result
 
     ENV TAG2=$BASE_TAG-ghc902
     BUILD --build-arg TAG=$TAG2 --build-arg ALPINE=3.14.2 --build-arg GHC=9.0.2  --build-arg CABAL=3.4.0.0 +tested-result
