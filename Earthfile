@@ -14,9 +14,12 @@ all:
     ENV TAG3=$BASE_TAG-ghc8107
     BUILD --build-arg TAG=$TAG3 --build-arg ALPINE=3.15.0 --build-arg GHC=8.10.7 --build-arg CABAL=3.2.0.0 +tested-result
 
+    ENV TAG4=$BASE_TAG-ghc884
+    BUILD --build-arg TAG=$TAG4 --build-arg ALPINE=3.15.0 --build-arg GHC=8.8.4 --build-arg CABAL=3.0.0.0 +tested-result
+
     RUN apk add bash gettext
     COPY ./update-readme.sh .
-    RUN ./update-readme.sh "$TAG1" "$TAG2" "$TAG3"
+    RUN ./update-readme.sh "$TAG1" "$TAG2" "$TAG3" "$TAG4"
     SAVE ARTIFACT README.md
 
 base-system:
