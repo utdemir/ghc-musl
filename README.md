@@ -21,6 +21,7 @@ Here are the latest images currently [published in Docker Hub](https://hub.docke
 * utdemir/ghc-musl:v24-ghc922
 * utdemir/ghc-musl:v24-ghc902
 * utdemir/ghc-musl:v24-ghc8107
+* utdemir/ghc-musl:v24-ghc884
 
 ## Usage
 
