@@ -1,125 +1,119 @@
-all:
-    FROM alpine:3.15.0
+VERSION 0.6
 
-    ARG VERSION=24
+ARG ALPINE_VERSION=3.15.4
+FROM alpine:$ALPINE_VERSION
 
-    ENV BASE_TAG=utdemir/ghc-musl:v$VERSION
-
-    ENV TAG1=$BASE_TAG-ghc922
-    BUILD --build-arg TAG=$TAG1 --build-arg ALPINE=3.15.0 --build-arg GHC=9.2.2  --build-arg CABAL=3.6.0.0 +tested-result
-
-    ENV TAG2=$BASE_TAG-ghc902
-    BUILD --build-arg TAG=$TAG2 --build-arg ALPINE=3.15.0 --build-arg GHC=9.0.2  --build-arg CABAL=3.4.0.0 +tested-result
-
-    ENV TAG3=$BASE_TAG-ghc8107
-    BUILD --build-arg TAG=$TAG3 --build-arg ALPINE=3.15.0 --build-arg GHC=8.10.7 --build-arg CABAL=3.2.0.0 +tested-result
-
-    ENV TAG4=$BASE_TAG-ghc884
-    BUILD --build-arg TAG=$TAG4 --build-arg ALPINE=3.15.0 --build-arg GHC=8.8.4 --build-arg CABAL=3.0.0.0 +tested-result
-
-    RUN apk add bash gettext
-    COPY ./update-readme.sh .
-    RUN ./update-readme.sh "$TAG1" "$TAG2" "$TAG3" "$TAG4"
-    SAVE ARTIFACT README.md
+ARG GHC_MUSL_VERSION=24
+ARG BASE_TAG=utdemir/ghc-musl:v$GHC_MUSL_VERSION
 
 base-system:
-    ARG ALPINE
-    FROM alpine:$ALPINE
-
-    RUN echo 2021-10-30-3
-
-    RUN apk update \
-          && apk add \
-               gcc g++ bash git make xz tar binutils-gold \
-               perl curl file automake autoconf dpkg \
-               fakeroot findutils shadow
-
-    RUN apk add \
-          gmp-dev ncurses-dev \
-          libffi libffi-dev \
-          openssl-dev openssl-libs-static \
-          xz xz-dev ncurses-static \
-          pcre pcre-dev pcre2 pcre2-dev \
-          bzip2 bzip2-dev bzip2-static \
-          curl libcurl curl-static \
-          zlib zlib-dev zlib-static \
-          sdl sdl-dev sdl-static \
-          sdl_mixer sdl_mixer-dev \
-          sdl_image sdl_image-dev \
-          sdl2 sdl2-dev \
-          sdl2_mixer sdl2_mixer-dev \
-          sdl2_image sdl2_image-dev \
-          sdl2_ttf sdl2_ttf-dev \
-          freetype freetype-dev freetype-static \
-          libpng libpng-static \
-          brotli brotli-static
-
-    RUN ln -s /usr/lib/libncursesw.so.6 /usr/lib/libtinfo.so.6
+  FROM alpine:$ALPINE_VERSION
+  RUN apk update \
+   && apk add \
+        autoconf automake bash binutils-gold curl dpkg fakeroot file \
+        findutils g++ gcc git make perl shadow tar xz \
+   && apk add \
+        brotli brotli-static \
+        bzip2 bzip2-dev bzip2-static \
+        curl libcurl curl-static \
+        freetype freetype-dev freetype-static \
+        gmp-dev \
+        libffi libffi-dev \
+        libpng libpng-static \
+        ncurses-dev ncurses-static \
+        openssl-dev openssl-libs-static \
+        pcre pcre-dev \
+        pcre2 pcre2-dev \
+        sdl sdl-dev sdl-static \
+        sdl2 sdl2-dev \
+        sdl2_image sdl2_image-dev \
+        sdl2_mixer sdl2_mixer-dev \
+        sdl2_ttf sdl2_ttf-dev \
+        sdl_image sdl_image-dev \
+        sdl_mixer sdl_mixer-dev \
+        xz xz-dev \
+        zlib zlib-dev zlib-static \
+   && ln -s /usr/lib/libncursesw.so.6 /usr/lib/libtinfo.so.6
 
 ghcup:
-    FROM +base-system
-    ENV GHCUP_INSTALL_BASE_PREFIX=/usr/local
-    RUN curl --fail -o /bin/ghcup \
-          'https://downloads.haskell.org/ghcup/x86_64-linux-ghcup' \
-          && chmod +x /bin/ghcup
+  FROM +base-system
+  ENV GHCUP_INSTALL_BASE_PREFIX=/usr/local
+  RUN curl --fail --output /bin/ghcup \
+        'https://downloads.haskell.org/ghcup/x86_64-linux-ghcup' \
+   && chmod 0755 /bin/ghcup \
+   && ghcup upgrade --target /bin/ghcup \
+   && ghcup install cabal --set \
+   && /usr/local/.ghcup/bin/cabal update
+  ENV PATH="/usr/local/.ghcup/bin:$PATH"
 
-    RUN ghcup upgrade --target /bin/ghcup
-
-ghc-deps:
-    FROM +ghcup
-
-    ARG GHC
-    RUN ghcup install ghc "$GHC" \
-          && ghcup set ghc "$GHC"
-
-    ARG CABAL
-    RUN ghcup install cabal "$CABAL" \
-          && ghcup set cabal "$CABAL"
-
-result:
-    FROM +ghc-deps
-    ENV PATH="/usr/local/.ghcup/bin:$PATH"
-    RUN cabal update
-
-tested-result:
-    FROM +result
-    BUILD +test
-
-    ARG TAG
-    SAVE IMAGE --push "$TAG"
-
-test:
-    FROM busybox
-    BUILD +test-cabal
-
-    # stack tests are not enabled on the CI because they require the
-    # --privileged flag which is not available on GitHub actions.
-    BUILD +test-stack
+ghc:
+  FROM +ghcup
+  ARG --required GHC
+  RUN ghcup install ghc "$GHC" --set
 
 test-cabal:
-    FROM +result
-    COPY example /example
-    WORKDIR /example/
-    RUN cabal update && cabal new-build example --enable-executable-static
-
-    # below tests would be nice to have, but 'cabal list-bin' is only present
-    # on cabal-install >=3.2
-
-    # RUN file $(cabal list-bin example) | grep 'statically linked'
-    # RUN $(cabal list-bin example) | grep 'Hello World!'
-
-test-stack-base:
-    FROM earthly/dind:alpine
-    RUN apk add curl
-    RUN curl -sSL https://get.haskellstack.org/ | sh
-    COPY example /example
-    WORKDIR /example/
+  FROM +ghc
+  COPY example /example
+  WORKDIR /example/
+  RUN cabal new-build example --enable-executable-static
+  RUN file $(cabal list-bin example) | grep 'statically linked'
+  RUN echo test | $(cabal list-bin example) | grep 'Hello World!'
 
 test-stack:
-    FROM +test-stack-base
+  FROM earthly/dind:alpine
+  RUN apk add curl file \
+   && curl -sSL https://get.haskellstack.org/ | sh
+  COPY example /example
+  WORKDIR /example/
+  WITH DOCKER --load ghc-musl=+ghc
+    RUN stack build \
+          --ghc-options '-static -optl-static -optl-pthread -fPIC' \
+          --docker --docker-image ghc-musl
+  END
+  RUN file $(find /example/.stack-work/install/ -type f -name example) \
+    | grep 'statically linked'
+  RUN echo test \
+    | $(find /example/.stack-work/install/ -type f -name example) \
+    | grep 'Hello World!'
 
-    WITH DOCKER --load result=+result
-        RUN stack build \
-            --ghc-options '-static -optl-static -optl-pthread -fPIC' \
-            --docker --docker-image result
-    END
+image:
+  FROM +ghc
+  ARG TEST_CABAL=1
+  ARG TEST_STACK=1
+  ARG --required TAG
+  IF [ "$TEST_CABAL" = "1" ]
+    BUILD +test-cabal
+  END
+  IF [ "$TEST_STACK" = "1" ]
+    BUILD +test-stack
+  END
+  SAVE IMAGE --push "$TAG"
+
+ghc922:
+  BUILD +image --GHC=9.2.2 --TAG=$BASE_TAG-ghc922
+
+ghc902:
+  BUILD +image --GHC=9.0.2 --TAG=$BASE_TAG-ghc902
+
+ghc8107:
+  BUILD +image --GHC=8.10.7 --TAG=$BASE_TAG-ghc8107
+
+ghc884:
+  BUILD +image --GHC=8.8.4 --TAG=$BASE_TAG-ghc884
+
+readme:
+  RUN apk add bash gettext
+  COPY ./update-readme.sh .
+  RUN ./update-readme.sh \
+        "$BASE_TAG-ghc922" \
+        "$BASE_TAG-ghc902" \
+        "$BASE_TAG-ghc8107" \
+        "$BASE_TAG-ghc884"
+  SAVE ARTIFACT README.md
+
+all:
+  BUILD +ghc922
+  BUILD +ghc902
+  BUILD +ghc8107
+  BUILD +ghc884
+  BUILD +readme

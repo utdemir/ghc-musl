@@ -103,16 +103,26 @@ newer compiler version.
 
 The build process is orchestrated using [Earthly][]. Once it is installed
 (or obtained via "nix-shell -p earthly"), you can use below command to build
-and test all images, and generate an updated `README.md`:
+and test all images:
 
 ```
-earthly --allow-privileged --artifact +all/README.md
+earthly --allow-privileged +all
 ```
 
 Note: `--allow-privileged` is only necessary because we use Docker-in-Docker
 project to test if the generated images work with `stack`'s Docker support.
-Feel free to comment out `BUILD +test-stack` line to test without passing
-`--allow-privileged`.
+You can use the following command to disable Stack tests so that
+`--allow-privileged` is not necessary:
+
+```
+earthly --build-arg TEST_STACK=0 +all
+```
+
+The following command updates `README.md`:
+
+```
+earthly --artifact +readme/README.md
+```
 
 [Earthly]: https://earthly.dev
 
