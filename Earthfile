@@ -4,7 +4,7 @@ ARG ALPINE_VERSION=3.15.4
 FROM alpine:$ALPINE_VERSION
 
 ARG GHC_MUSL_VERSION=24
-ARG BASE_TAG=utdemir/ghc-musl:v$GHC_MUSL_VERSION
+ARG BASE_TAG=utdemir/ghc-musl:v${GHC_MUSL_VERSION}-
 
 base-system:
   FROM alpine:$ALPINE_VERSION
@@ -90,25 +90,25 @@ image:
   SAVE IMAGE --push "$TAG"
 
 ghc922:
-  BUILD +image --GHC=9.2.2 --TAG=$BASE_TAG-ghc922
+  BUILD +image --GHC=9.2.2 --TAG=${BASE_TAG}ghc922
 
 ghc902:
-  BUILD +image --GHC=9.0.2 --TAG=$BASE_TAG-ghc902
+  BUILD +image --GHC=9.0.2 --TAG=${BASE_TAG}ghc902
 
 ghc8107:
-  BUILD +image --GHC=8.10.7 --TAG=$BASE_TAG-ghc8107
+  BUILD +image --GHC=8.10.7 --TAG=${BASE_TAG}ghc8107
 
 ghc884:
-  BUILD +image --GHC=8.8.4 --TAG=$BASE_TAG-ghc884
+  BUILD +image --GHC=8.8.4 --TAG=${BASE_TAG}ghc884
 
 readme:
   RUN apk add bash gettext
   COPY ./update-readme.sh .
   RUN ./update-readme.sh \
-        "$BASE_TAG-ghc922" \
-        "$BASE_TAG-ghc902" \
-        "$BASE_TAG-ghc8107" \
-        "$BASE_TAG-ghc884"
+        "${BASE_TAG}ghc922" \
+        "${BASE_TAG}ghc902" \
+        "${BASE_TAG}ghc8107" \
+        "${BASE_TAG}ghc884"
   SAVE ARTIFACT README.md
 
 all:
