@@ -1,6 +1,6 @@
 VERSION 0.6
 
-ARG ALPINE_VERSION=3.15.4
+ARG ALPINE_VERSION=3.16.0
 FROM alpine:$ALPINE_VERSION
 
 ARG GHC_MUSL_VERSION=24
@@ -24,7 +24,6 @@ base-system:
         openssl-dev openssl-libs-static \
         pcre pcre-dev \
         pcre2 pcre2-dev \
-        sdl sdl-dev sdl-static \
         sdl2 sdl2-dev \
         sdl2_image sdl2_image-dev \
         sdl2_mixer sdl2_mixer-dev \
