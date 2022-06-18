@@ -28,8 +28,6 @@ base-system:
         sdl2_image sdl2_image-dev \
         sdl2_mixer sdl2_mixer-dev \
         sdl2_ttf sdl2_ttf-dev \
-        sdl_image sdl_image-dev \
-        sdl_mixer sdl_mixer-dev \
         xz xz-dev \
         zlib zlib-dev zlib-static \
    && ln -s /usr/lib/libncursesw.so.6 /usr/lib/libtinfo.so.6
