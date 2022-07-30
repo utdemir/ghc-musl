@@ -9,6 +9,7 @@ ARG BASE_TAG=utdemir/ghc-musl:v${GHC_MUSL_VERSION}-
 base-system:
   FROM alpine:$ALPINE_VERSION
   RUN apk update \
+   && apk upgrade \
    && apk add \
         autoconf automake bash binutils-gold curl dpkg fakeroot file \
         findutils g++ gcc git make perl shadow tar xz \
