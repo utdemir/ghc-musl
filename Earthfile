@@ -3,12 +3,14 @@ VERSION 0.6
 ARG ALPINE_VERSION=3.16.1
 FROM alpine:$ALPINE_VERSION
 
-ARG GHC_MUSL_VERSION=24
-ARG BASE_TAG=utdemir/ghc-musl:v${GHC_MUSL_VERSION}-
+ARG DATE=$(date --utc +%Y%m%d)
+
+ARG IMAGE_NAME=utdemir/ghc-musl
 
 base-system:
   FROM alpine:$ALPINE_VERSION
   RUN apk update \
+   && apk upgrade \
    && apk add \
         autoconf automake bash binutils-gold curl dpkg fakeroot file \
         findutils g++ gcc git make perl shadow tar xz \
@@ -77,40 +79,45 @@ image:
   FROM +ghc
   ARG TEST_CABAL=1
   ARG TEST_STACK=1
-  ARG --required TAG
+  ARG --required GHC
+  ARG TAG_GHC=0
   IF [ "$TEST_CABAL" = "1" ]
     BUILD +test-cabal
   END
   IF [ "$TEST_STACK" = "1" ]
     BUILD +test-stack
   END
-  SAVE IMAGE --push "$TAG"
+  IF [ "$TAG_GHC" = "1" ]
+    SAVE IMAGE --push "${IMAGE_NAME}:ghc${GHC}"
+  END
+  SAVE IMAGE --push "${IMAGE_NAME}:ghc${GHC}-alpine${ALPINE_VERSION}"
+  SAVE IMAGE --push "${IMAGE_NAME}:ghc${GHC}-alpine${ALPINE_VERSION}-${DATE}"
 
-ghc924:
-  BUILD +image --GHC=9.2.4 --TAG=${BASE_TAG}ghc924
+ghc9.2.4:
+  BUILD +image --GHC=9.2.4
 
-ghc902:
-  BUILD +image --GHC=9.0.2 --TAG=${BASE_TAG}ghc902
+ghc9.0.2:
+  BUILD +image --GHC=9.0.2
 
-ghc8107:
-  BUILD +image --GHC=8.10.7 --TAG=${BASE_TAG}ghc8107
+ghc8.10.7:
+  BUILD +image --GHC=8.10.7
 
-ghc884:
-  BUILD +image --GHC=8.8.4 --TAG=${BASE_TAG}ghc884
+ghc8.8.4:
+  BUILD +image --GHC=8.8.4
 
 readme:
   RUN apk add bash gettext
   COPY ./update-readme.sh .
   RUN ./update-readme.sh \
-        "${BASE_TAG}ghc924" \
-        "${BASE_TAG}ghc902" \
-        "${BASE_TAG}ghc8107" \
-        "${BASE_TAG}ghc884"
+        "${IMAGE_NAME}:ghc9.2.4-alpine${ALPINE_VERSION}-${DATE}" \
+        "${IMAGE_NAME}:ghc9.0.2-alpine${ALPINE_VERSION}-${DATE}" \
+        "${IMAGE_NAME}:ghc8.10.7-alpine${ALPINE_VERSION}-${DATE}" \
+        "${IMAGE_NAME}:ghc8.8.4-alpine${ALPINE_VERSION}-${DATE}"
   SAVE ARTIFACT README.md
 
 all:
-  BUILD +ghc924
-  BUILD +ghc902
-  BUILD +ghc8107
-  BUILD +ghc884
+  BUILD +ghc9.2.4
+  BUILD +ghc9.0.2
+  BUILD +ghc8.10.7
+  BUILD +ghc8.8.4
   BUILD +readme
