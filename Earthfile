@@ -86,6 +86,9 @@ image:
   END
   SAVE IMAGE --push "$TAG"
 
+ghc943:
+  BUILD +image --GHC=9.4.3 --TAG=${BASE_TAG}ghc943
+
 ghc925:
   BUILD +image --GHC=9.2.5 --TAG=${BASE_TAG}ghc925
 
@@ -102,6 +105,7 @@ readme:
   RUN apk add bash gettext
   COPY ./update-readme.sh .
   RUN ./update-readme.sh \
+        "${BASE_TAG}ghc943" \
         "${BASE_TAG}ghc925" \
         "${BASE_TAG}ghc902" \
         "${BASE_TAG}ghc8107" \
@@ -109,6 +113,7 @@ readme:
   SAVE ARTIFACT README.md
 
 all:
+  BUILD +ghc943
   BUILD +ghc925
   BUILD +ghc902
   BUILD +ghc8107
