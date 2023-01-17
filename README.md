@@ -18,10 +18,11 @@ build tool using its Docker integration.
 
 Here are the latest images currently [published in Docker Hub](https://hub.docker.com/r/utdemir/ghc-musl/tags):
 
-* utdemir/ghc-musl:v24-ghc922
-* utdemir/ghc-musl:v24-ghc902
-* utdemir/ghc-musl:v24-ghc8107
-* utdemir/ghc-musl:v24-ghc884
+* utdemir/ghc-musl:v25-ghc944
+* utdemir/ghc-musl:v25-ghc925
+* utdemir/ghc-musl:v25-ghc902
+* utdemir/ghc-musl:v25-ghc8107
+* utdemir/ghc-musl:v25-ghc884
 
 ## Usage
 
@@ -32,7 +33,7 @@ with `--enable-executable-static` flag inside the container:
 
 ```
 $ cd myproject/
-$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v24-ghc922
+$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v25-ghc944
 sh$ cd /mnt
 sh$ cabal new-update
 sh$ cabal new-build --enable-executable-static
@@ -47,7 +48,7 @@ Use below arguments, or set the relevant options on your `stack.yaml`:
 ```
 stack build \
   --ghc-options ' -static -optl-static -optl-pthread -fPIC' \
-  --docker --docker-image "utdemir/ghc-musl:v24-ghc922" \
+  --docker --docker-image "utdemir/ghc-musl:v25-ghc944" \
   --no-nix
 ```
 
@@ -63,7 +64,7 @@ Below shell session shows how to start a pre-compiled docker container
 and compile a simple `Hello.hs` as a static executable:
 
 ```
-$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v24-ghc922
+$ docker run -itv $PWD:/mnt utdemir/ghc-musl:v25-ghc944
 bash-4.4# cd /mnt/
 bash-4.4# cat Hello.hs
 main = putStrLn "Hello"
@@ -99,16 +100,26 @@ newer compiler version.
 
 The build process is orchestrated using [Earthly][]. Once it is installed
 (or obtained via "nix-shell -p earthly"), you can use below command to build
-and test all images, and generate an updated `README.md`:
+and test all images:
 
 ```
-earthly --allow-privileged --artifact +all/README.md
+earthly --allow-privileged +all
 ```
 
 Note: `--allow-privileged` is only necessary because we use Docker-in-Docker
 project to test if the generated images work with `stack`'s Docker support.
-Feel free to comment out `BUILD +test-stack` line to test without passing
-`--allow-privileged`.
+You can use the following command to disable Stack tests so that
+`--allow-privileged` is not necessary:
+
+```
+earthly --build-arg TEST_STACK=0 +all
+```
+
+The following command updates `README.md`:
+
+```
+earthly --artifact +readme/README.md
+```
 
 [Earthly]: https://earthly.dev
 
