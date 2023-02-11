@@ -89,8 +89,8 @@ image:
 ghc944:
   BUILD +image --GHC=9.4.4 --TAG=${BASE_TAG}ghc944
 
-ghc925:
-  BUILD +image --GHC=9.2.5 --TAG=${BASE_TAG}ghc925
+ghc926:
+  BUILD +image --GHC=9.2.6 --TAG=${BASE_TAG}ghc926
 
 ghc902:
   BUILD +image --GHC=9.0.2 --TAG=${BASE_TAG}ghc902
@@ -106,7 +106,7 @@ readme:
   COPY ./update-readme.sh .
   RUN ./update-readme.sh \
         "${BASE_TAG}ghc944" \
-        "${BASE_TAG}ghc925" \
+        "${BASE_TAG}ghc926" \
         "${BASE_TAG}ghc902" \
         "${BASE_TAG}ghc8107" \
         "${BASE_TAG}ghc884"
@@ -114,7 +114,7 @@ readme:
 
 all:
   BUILD +ghc944
-  BUILD +ghc925
+  BUILD +ghc926
   BUILD +ghc902
   BUILD +ghc8107
   BUILD +ghc884
