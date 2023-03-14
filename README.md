@@ -125,6 +125,9 @@ earthly --artifact +readme/README.md
 
 ## Related
 
+* Multi-arch: <https://github.com/benz0li/ghc-musl>
+  * `os/arch`'s: `linux/amd64`, `linux/arm64/v8`
+  * Built using Hadrian, from source, without docs
 * <https://gitlab.com/neosimsim/docker-builder-images>
 * Using Nix: <https://github.com/nh2/static-haskell-nix>
 * Not maintained: <https://github.com/fpco/docker-static-haskell>
